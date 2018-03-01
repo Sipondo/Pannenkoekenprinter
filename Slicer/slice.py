@@ -3,7 +3,7 @@
 # swag
 
 #############CONSTANTS
-IMAGE_SIZE=(256,256)
+IMAGE_SIZE=(64,64)
 ##################
 
 
@@ -28,8 +28,8 @@ def gaussian_2d(sigma_mm, voxel_size = [1,1]):
 gaussian = gaussian_2d(3)
 
 #picture = Image.open("lisa.jpg").convert("L")
-#picture = Image.open("fish.PNG").convert("L")
-picture = Image.open("eiffel.jpg").convert("L")
+picture = Image.open("fish.PNG").convert("L")
+#picture = Image.open("niek.jpg").convert("L")
 #picture = Image.open("applelogo.jpg").convert("L")
 
 picture = picture.resize(IMAGE_SIZE, Image.BICUBIC)
@@ -65,11 +65,12 @@ conn_comps_layer0 = mp.label(final_picture<1, connectivity=1)
 conn_comps_layer1 = mp.label(final_picture==1, connectivity=1)
 conn_comps_layer2 = mp.label(final_picture>1, connectivity=1)
 
-plt.imshow(conn_comps_layer0, cmap='gray')
+#plt.imshow(conn_comps_layer0, cmap='gray')
+plt.imshow(conn_comps_layer0)
 plt.show()
-plt.imshow(conn_comps_layer1, cmap='gray')
+plt.imshow(conn_comps_layer1)
 plt.show()
-plt.imshow(conn_comps_layer2, cmap='gray')
+plt.imshow(conn_comps_layer2)
 plt.show()
 
 bottom_imgs = []
