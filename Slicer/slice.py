@@ -3,7 +3,7 @@
 # swag
 
 #############CONSTANTS
-IMAGE_SIZE=(64,64)
+IMAGE_SIZE=(256,256)
 ##################
 
 
@@ -27,9 +27,9 @@ def gaussian_2d(sigma_mm, voxel_size = [1,1]):
 
 gaussian = gaussian_2d(3)
 
-picture = Image.open("lisa.jpg").convert("L")
+#picture = Image.open("lisa.jpg").convert("L")
 #picture = Image.open("fish.PNG").convert("L")
-#picture = Image.open("eiffel.jpg").convert("L")
+picture = Image.open("eiffel.jpg").convert("L")
 #picture = Image.open("applelogo.jpg").convert("L")
 
 picture = picture.resize(IMAGE_SIZE, Image.BICUBIC)
@@ -57,5 +57,34 @@ plt.show()
 plt.imshow(pic_layer2)
 plt.show()
 
-plt.imshow(pic_layer1*2+pic_layer2, cmap='gray')
+final_picture = pic_layer1*2+pic_layer2
+plt.imshow(final_picture, cmap='gray')
 plt.show()
+
+conn_comps_layer0 = mp.label(final_picture<1, connectivity=1)
+conn_comps_layer1 = mp.label(final_picture==1, connectivity=1)
+conn_comps_layer2 = mp.label(final_picture>1, connectivity=1)
+
+plt.imshow(conn_comps_layer0, cmap='gray')
+plt.show()
+plt.imshow(conn_comps_layer1, cmap='gray')
+plt.show()
+plt.imshow(conn_comps_layer2, cmap='gray')
+plt.show()
+
+bottom_imgs = []
+middle_imgs = []
+top_imgs = []
+
+for i in range(np.max(conn_comps_layer0)):
+    bottom_imgs.append(conn_comps_layer0==i)
+for i in range(np.max(conn_comps_layer1)):
+    middle_imgs.append(conn_comps_layer1==i)
+for i in range(np.max(conn_comps_layer2)):
+    top_imgs.append(conn_comps_layer2==i)
+
+for img in top_imgs[1:]:
+    print(np.sum(img))
+    if(np.sum(img)>IMAGE_SIZE[0]):
+        plt.imshow(img)
+        plt.show()
