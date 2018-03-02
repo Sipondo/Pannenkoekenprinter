@@ -3,89 +3,77 @@
 # swag
 
 #############CONSTANTS
-IMAGE_SIZE=(64,64)
-##################
+IMAGE_SIZE=(256,256)
 
+##################
 
 import numpy as np
 from PIL import Image
+import matplotlib
+#%matplotlib qt5
 import matplotlib.pyplot as plt
 import scipy.signal
 from skimage import morphology as mp
+from skimage import exposure
+import slice_lib as slib
+from mpl_toolkits.mplot3d import axes3d
 
-def gaussian_2d(sigma_mm, voxel_size = [1,1]):
-    kernel = None
-    x = np.linspace(-3*sigma_mm+.5, 3*sigma_mm+.5, (6*sigma_mm+.5)/voxel_size[0])
-    y = np.linspace(-3*sigma_mm+.5, 3*sigma_mm+.5, (6*sigma_mm+.5)/voxel_size[1])
-    kernel = np.zeros((int((6*sigma_mm+.5)/voxel_size[0]),int((6*sigma_mm+.5)/voxel_size[1])))
-    constant = 1.0 / (2.0*np.pi*(sigma_mm*sigma_mm))
+IMAGE_FACTOR = (IMAGE_SIZE[0]*IMAGE_SIZE[1]) ** (1. / 4) / 4
 
-    for i in range(0,int(kernel.shape[0])):
-        for j in range(0,int(kernel.shape[1])):
-            kernel[i,j] = constant * np.exp(-1.0*(x[i]*x[i]+y[j]*y[j])/(2.0*sigma_mm*sigma_mm))
-    return kernel, x, y
+gaussian = slib.gaussian_2d(IMAGE_FACTOR)
 
-gaussian = gaussian_2d(3)
+image_names = ["eiffel.jpg", "lisa.jpg", "fish.jpg"]
 
-#picture = Image.open("lisa.jpg").convert("L")
-picture = Image.open("fish.PNG").convert("L")
-#picture = Image.open("niek.jpg").convert("L")
-#picture = Image.open("applelogo.jpg").convert("L")
+def vectorize(segment):
+    vector_list = []
+    going_left = False
+    for i in range(segment.shape[1]):
+        row = segment[:,i]
+        rsum = np.sum(row)
+        if rsum>0:
+            xor = np.argwhere(np.logical_xor(np.insert(row[:-1],0,False),row))
+            if going_left:
+                xor = np.flip(xor,0)
+            for j in range(int(len(xor)/2)):
+                vector_list.append(((int(xor[2*j]),i),(int(xor[2*j+1]),i)))
+            going_left = !going_left
+    return vector_list
 
-picture = picture.resize(IMAGE_SIZE, Image.BICUBIC)
 
-pic_array = np.array(picture)
+for imgname in image_names[1:2]:
+    picture = Image.open(imgname).convert("L")
+    picture = picture.resize(IMAGE_SIZE, Image.BICUBIC)
+    pic_array = np.array(picture)
 
-#plt.plot(pic_array[:,:,0])
-plt.imshow(pic_array, cmap="gray")
-plt.show()
+    np.mean(pic_array)
+    np.median(pic_array)
 
-pic_convolved = scipy.signal.fftconvolve(pic_array, gaussian[0], mode='same')
+    # Equalization
+    img_eq = exposure.equalize_hist(pic_array)
 
-mean = np.mean(pic_convolved)
-std = np.std(pic_convolved)
+    display_image, display_layered,\
+     seg_bot, seg_mid, seg_top = slib.segment_image(pic_array, gaussian)
 
-pic_layer1 = mp.dilation(pic_convolved>mean, mp.square(4))
+    plt.imshow(display_image, cmap="YlOrBr_r")
+    plt.show()
+    plt.imshow(display_layered ** .2 + 1000, cmap="gist_ncar")
+    plt.show()
 
-mean = np.mean(pic_convolved[pic_layer1==0])
-std = np.std(pic_convolved[pic_layer1==0])
+    # fig=plt.figure()
+    # ax=fig.add_subplot(111,projection='3d')
+    # x,y = np.meshgrid(np.arange(IMAGE_SIZE[0]),np.arange(IMAGE_SIZE[1]))
+    # ax.contourf3D(x, y, display_layered, cmap="gist_ncar")
+    # plt.draw()
+    # plt.show()
 
-pic_layer2 = np.invert(mp.erosion(pic_convolved<mean, mp.square(4)))
+seg_mid[0][:,50].shape
+np.insert(seg_mid[0][:,50][:-1],0,True).shape
+np.flip(np.argwhere(np.logical_xor(np.insert(seg_mid[0][:,50][:-1],0,False),seg_mid[0][:,50])),0)
 
-plt.imshow(pic_layer1)
-plt.show()
-plt.imshow(pic_layer2)
-plt.show()
+vectors = []
+for img in (seg_bot+seg_mid+seg_top):
+    plt.imshow(img, cmap="YlOrBr_r")
+    plt.show()
+    vectors.append(vectorize(img))
 
-final_picture = pic_layer1*2+pic_layer2
-plt.imshow(final_picture, cmap='gray')
-plt.show()
-
-conn_comps_layer0 = mp.label(final_picture<1, connectivity=1)
-conn_comps_layer1 = mp.label(final_picture==1, connectivity=1)
-conn_comps_layer2 = mp.label(final_picture>1, connectivity=1)
-
-#plt.imshow(conn_comps_layer0, cmap='gray')
-plt.imshow(conn_comps_layer0)
-plt.show()
-plt.imshow(conn_comps_layer1)
-plt.show()
-plt.imshow(conn_comps_layer2)
-plt.show()
-
-bottom_imgs = []
-middle_imgs = []
-top_imgs = []
-
-for i in range(np.max(conn_comps_layer0)):
-    bottom_imgs.append(conn_comps_layer0==i)
-for i in range(np.max(conn_comps_layer1)):
-    middle_imgs.append(conn_comps_layer1==i)
-for i in range(np.max(conn_comps_layer2)):
-    top_imgs.append(conn_comps_layer2==i)
-
-for img in top_imgs[1:]:
-    print(np.sum(img))
-    if(np.sum(img)>IMAGE_SIZE[0]):
-        plt.imshow(img)
-        plt.show()
+len(vectors)
