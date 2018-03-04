@@ -1,11 +1,16 @@
 from kivy.app import App
 from kivy.core.window import Window
+from kivy.lang import Builder
 from kivy.uix.button import Button
-from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.widget import Widget
 
 
-def noop():
+class OverviewScreen(Screen):
+    pass
+
+
+class DrawingScreen(Screen):
     pass
 
 
@@ -30,19 +35,18 @@ class PPImagedButton(Button):
 
     def click(self):
         App.get_running_app().toolManager.selectTool(self.tool)
+        self.icon = 'resources/erase.png'
+        print(self.icon)
+        print(self.tool)
 
 
 class DrawSpace(Widget):
     def build(self):
-        self.text = Root.text_input
-
-
-class Root(FloatLayout):
-    pass
+        pass
 
 
 class ToolManager:
-    print = 0
+    panprint = 0
     undo = 1
     redo = 2
     brush = 3
@@ -67,13 +71,24 @@ class ToolManager:
             print('color selected: ' + str(color))
 
 
-class PannenkoekenApp(App):
+Builder.load_file('drawing.kv')
+Builder.load_file('overview.kv')
+
+screenManager = ScreenManager()
+
+screenManager.add_widget(DrawingScreen(name='drawing'))
+screenManager.add_widget(OverviewScreen(name='overview'))
+
+screenManager.current = 'overview'
+
+
+class PanPrintApp(App):
     toolManager = ToolManager()
 
     def build(self):
-        self.title = "Pannenkoekenswag"
+        return screenManager
 
 
-if __name__ == '__main__':
-    Window.fullscreen = 'auto'
-    PannenkoekenApp().run()
+# Window.fullscreen = 'auto'
+Window.size = (1024, 600)
+PanPrintApp().run()

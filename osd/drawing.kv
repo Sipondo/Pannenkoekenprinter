@@ -1,13 +1,13 @@
 #:kivy 1.1.0
 
-Root:
+<DrawingScreen@Screen>:
     BoxLayout:
         orientation: 'horizontal'
 
         BoxLayout:
             orientation: 'vertical'
             PPImagedButton:
-                tool: app.toolManager.print
+                tool: app.toolManager.panprint
                 icon: 'resources/print.png'
             PPImagedButton:
                 tool: app.toolManager.brush
@@ -22,7 +22,7 @@ Root:
             orientation: 'vertical'
             PPImagedButton:
                 tool: app.toolManager.undo
-                icon: 'resources/print.png'
+                icon: 'resources/undo.png'
             PPImagedButton:
                 tool: app.toolManager.fill
                 icon: 'resources/fill.png'
@@ -36,7 +36,7 @@ Root:
             orientation: 'vertical'
             PPImagedButton:
                 tool: app.toolManager.redo
-                icon: 'resources/print.png'
+                icon: 'resources/redo.png'
             PPImagedButton:
                 tool: app.toolManager.erase
                 icon: 'resources/erase.png'
@@ -45,6 +45,11 @@ Root:
                 icon: 'resources/brush.png'
             PPColoredButton:
                 color: 2
+
+        Slider:
+            orientation: 'vertical'
+            size_hint_x: None
+            width: 30
 
         DrawSpace:
             size_hint_x: None
@@ -56,9 +61,9 @@ Root:
     on_release: self.click()
     Image:
         source: self.parent.icon
-        x: self.parent.x
-        y: self.parent.y
-        size: 160, 150
+        x: self.parent.x + 5
+        y: self.parent.y + 15
+        size: 120, 120
 
 <PPColoredButton@Button>:
     background_normal: 'resources/button.png'
