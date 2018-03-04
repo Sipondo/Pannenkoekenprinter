@@ -37,7 +37,7 @@ def request_hero_data():
 
     for i, hero in enumerate(data):
         if (hero['ImageURL']!='Probius'):
-            print hero ['ImageURL'] + " [" + str(i+1) + "/" + str(len(data)) + "]"
+            #print hero ['ImageURL'] + " [" + str(i+1) + "/" + str(len(data)) + "]"
             response = requests.get('https://www.hotslogs.com/Sitewide/HeroDetails?Hero='+hero['ImageURL'])
             input = response.text
             wins = input.split('class="rgHeader">Opposing Hero</th>', 1)[1].split('</thead><tbody>',1)[1].split('</tbody>', 1)[0].split('/Portraits/')[1:]
@@ -128,7 +128,7 @@ def fuse_dict(dict1, dict2):
         if(dict2.has_key(key)):
             return_dict[key] = (dict2[key] + value)
         else:
-            print key
+            print(key)
     return return_dict
 
 class HotsAnalyse(Screen):
@@ -151,7 +151,7 @@ class HotsApp(App):
     hero_buttons = []
 
     for hero in heroes:
-        print hero['ImageURL']
+        #print hero['ImageURL']
         if (hero['ImageURL'] != 'Probius'):
             neutral[hero['ImageURL']] = 50
 
