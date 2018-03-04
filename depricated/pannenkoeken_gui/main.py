@@ -24,6 +24,7 @@ class SaveDialog(FloatLayout):
     text_input = ObjectProperty(None)
     cancel = ObjectProperty(None)
 
+
 class DrawSpace(Widget):
     def build(self):
         self.text = Root.text_input
@@ -126,10 +127,11 @@ class Root(FloatLayout):
 
         self.dismiss_popup()
 
+
 class Editor(App):
     def build(self):
         self.title = 'Pannenkoek Studio'
-    pass
+
 
 Factory.register('Root', cls=Root)
 Factory.register('LoadDialog', cls=LoadDialog)

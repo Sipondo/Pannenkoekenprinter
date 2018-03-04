@@ -1,0 +1,58 @@
+#:kivy 1.1.0
+
+Root:
+    BoxLayout:
+        orientation: 'horizontal'
+
+        BoxLayout:
+            orientation: 'vertical'
+            Button:
+                text: 'Print / Cancel'
+                on_release: root.show_load()
+            Button:
+                text: 'Freehand'
+                on_release: root.show_save()
+            Button:
+                text: 'Line'
+                on_release: root.show_save()
+            Button:
+                background_normal: 'resources/button.png'
+                background_color: [.9,.9,.9,1]
+                on_release: root.colorSelect(0)
+
+        BoxLayout:
+            orientation: 'vertical'
+            Button:
+                text: 'Undo'
+                on_release: root.show_load()
+            Button:
+                text: 'Fill'
+                on_release: root.show_save()
+            Button:
+                text: 'Circle'
+                on_release: root.show_save()
+            Button:
+                background_normal: 'resources/button.png'
+                background_color: [.6,.6,.6,1]
+                on_release: root.colorSelect(1)
+
+        BoxLayout:
+            orientation: 'vertical'
+            Button:
+                text: 'Redo'
+                on_release: root.show_load()
+            Button:
+                text: 'Erese'
+                on_release: root.show_save()
+            Button:
+                text: 'Square'
+                on_release: root.show_save()
+            Button:
+                background_normal: 'resources/button.png'
+                background_color: [.3,.3,.3,1]
+                on_release: root.colorSelect(2)
+
+        DrawSpace:
+            size_hint_x: None
+            width: 600
+
