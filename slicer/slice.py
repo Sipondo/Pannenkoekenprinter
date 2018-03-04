@@ -6,7 +6,10 @@
 IMAGE_SIZE=(256,256)
 
 ##################
-
+import sys
+print(sys.path)
+sys.path.append("Slicer\\")
+import slice_lib as slib
 import numpy as np
 from PIL import Image
 import matplotlib
@@ -15,14 +18,15 @@ import matplotlib.pyplot as plt
 import scipy.signal
 from skimage import morphology as mp
 from skimage import exposure
-import slice_lib as slib
+
 from mpl_toolkits.mplot3d import axes3d
 
 IMAGE_FACTOR = (IMAGE_SIZE[0]*IMAGE_SIZE[1]) ** (1. / 4) / 4
 
 gaussian = slib.gaussian_2d(IMAGE_FACTOR)
 
-image_names = ["eiffel.jpg", "lisa.jpg", "fish.jpg"]
+#image_names = ["eiffel.jpg", "lisa.jpg", "fish.jpg"]
+image_names = ["Slicer\\eiffel.jpg", "Slicer\\lisa.jpg", "Slicer\\fish.jpg"]
 
 def vectorize(segment):
     vector_list = []
