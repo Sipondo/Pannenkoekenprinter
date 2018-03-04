@@ -1,49 +1,49 @@
-#:kivy 1.1.0
+#:kivy 1.10.0
 
-<DrawingScreen@Screen>:
+<DrawingScreen>:
     BoxLayout:
         orientation: 'horizontal'
 
         BoxLayout:
             orientation: 'vertical'
-            PPImagedButton:
+            ImagedButton:
                 tool: app.toolManager.panprint
                 icon: 'resources/print.png'
-            PPImagedButton:
+            ImagedButton:
                 tool: app.toolManager.brush
                 icon: 'resources/brush.png'
-            PPImagedButton:
+            ImagedButton:
                 tool: app.toolManager.line
                 icon: 'resources/brush.png'
-            PPColoredButton:
+            ColoredButton:
                 color: 0
 
         BoxLayout:
             orientation: 'vertical'
-            PPImagedButton:
+            ImagedButton:
                 tool: app.toolManager.undo
                 icon: 'resources/undo.png'
-            PPImagedButton:
+            ImagedButton:
                 tool: app.toolManager.fill
                 icon: 'resources/fill.png'
-            PPImagedButton:
+            ImagedButton:
                 tool: app.toolManager.circle
                 icon: 'resources/brush.png'
-            PPColoredButton:
+            ColoredButton:
                 color: 1
 
         BoxLayout:
             orientation: 'vertical'
-            PPImagedButton:
+            ImagedButton:
                 tool: app.toolManager.redo
                 icon: 'resources/redo.png'
-            PPImagedButton:
+            ImagedButton:
                 tool: app.toolManager.erase
                 icon: 'resources/erase.png'
-            PPImagedButton:
+            ImagedButton:
                 tool: app.toolManager.square
                 icon: 'resources/brush.png'
-            PPColoredButton:
+            ColoredButton:
                 color: 2
 
         Slider:
@@ -55,7 +55,7 @@
             size_hint_x: None
             width: 600
 
-<PPImagedButton@Button>:
+<ImagedButton@Button>:
     background_normal: 'resources/button.png'
     background_color: [.094,.094,.341,1]
     on_release: self.click()
@@ -65,7 +65,12 @@
         y: self.parent.y + 15
         size: 120, 120
 
-<PPColoredButton@Button>:
+<ColoredButton@Button>:
     background_normal: 'resources/button.png'
     background_color: self.getColor()
     on_release: self.click()
+
+<Overview>
+    Button:
+        text: 'Hello'
+        on_release: root.manager.current = 'drawing'

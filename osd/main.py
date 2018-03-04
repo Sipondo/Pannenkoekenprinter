@@ -1,8 +1,7 @@
 from kivy.app import App
 from kivy.core.window import Window
-from kivy.lang import Builder
 from kivy.uix.button import Button
-from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.uix.widget import Widget
 
 
@@ -14,7 +13,7 @@ class DrawingScreen(Screen):
     pass
 
 
-class PPColoredButton(Button):
+class ColoredButton(Button):
     color = 0
 
     def getColor(self):
@@ -26,7 +25,7 @@ class PPColoredButton(Button):
         App.get_running_app().toolManager.selectColor(self.color)
 
 
-class PPImagedButton(Button):
+class ImagedButton(Button):
     icon = 'resources/brush.png'
     tool = -1
 
@@ -71,21 +70,19 @@ class ToolManager:
             print('color selected: ' + str(color))
 
 
-Builder.load_file('drawing.kv')
-Builder.load_file('overview.kv')
-
 screenManager = ScreenManager()
 
 screenManager.add_widget(DrawingScreen(name='drawing'))
 screenManager.add_widget(OverviewScreen(name='overview'))
 
-screenManager.current = 'overview'
+screenManager.current = 'drawing'
 
 
 class PanPrintApp(App):
     toolManager = ToolManager()
 
     def build(self):
+        self.title = 'Pannenkoekenswag'
         return screenManager
 
 
