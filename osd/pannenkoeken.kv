@@ -6,53 +6,61 @@ Root:
 
         BoxLayout:
             orientation: 'vertical'
-            Button:
-                text: 'Print / Cancel'
-                on_release: root.show_load()
-            Button:
-                text: 'Freehand'
-                on_release: root.show_save()
-            Button:
-                text: 'Line'
-                on_release: root.show_save()
-            Button:
-                background_normal: 'resources/button.png'
-                background_color: [.9,.9,.9,1]
-                on_release: root.colorSelect(0)
+            PPImagedButton:
+                tool: app.toolManager.print
+                icon: 'resources/print.png'
+            PPImagedButton:
+                tool: app.toolManager.brush
+                icon: 'resources/brush.png'
+            PPImagedButton:
+                tool: app.toolManager.line
+                icon: 'resources/brush.png'
+            PPColoredButton:
+                color: 0
 
         BoxLayout:
             orientation: 'vertical'
-            Button:
-                text: 'Undo'
-                on_release: root.show_load()
-            Button:
-                text: 'Fill'
-                on_release: root.show_save()
-            Button:
-                text: 'Circle'
-                on_release: root.show_save()
-            Button:
-                background_normal: 'resources/button.png'
-                background_color: [.6,.6,.6,1]
-                on_release: root.colorSelect(1)
+            PPImagedButton:
+                tool: app.toolManager.undo
+                icon: 'resources/print.png'
+            PPImagedButton:
+                tool: app.toolManager.fill
+                icon: 'resources/fill.png'
+            PPImagedButton:
+                tool: app.toolManager.circle
+                icon: 'resources/brush.png'
+            PPColoredButton:
+                color: 1
 
         BoxLayout:
             orientation: 'vertical'
-            Button:
-                text: 'Redo'
-                on_release: root.show_load()
-            Button:
-                text: 'Erese'
-                on_release: root.show_save()
-            Button:
-                text: 'Square'
-                on_release: root.show_save()
-            Button:
-                background_normal: 'resources/button.png'
-                background_color: [.3,.3,.3,1]
-                on_release: root.colorSelect(2)
+            PPImagedButton:
+                tool: app.toolManager.redo
+                icon: 'resources/print.png'
+            PPImagedButton:
+                tool: app.toolManager.erase
+                icon: 'resources/erase.png'
+            PPImagedButton:
+                tool: app.toolManager.square
+                icon: 'resources/brush.png'
+            PPColoredButton:
+                color: 2
 
         DrawSpace:
             size_hint_x: None
             width: 600
 
+<PPImagedButton@Button>:
+    background_normal: 'resources/button.png'
+    background_color: [.094,.094,.341,1]
+    on_release: self.click()
+    Image:
+        source: self.parent.icon
+        x: self.parent.x
+        y: self.parent.y
+        size: 160, 150
+
+<PPColoredButton@Button>:
+    background_normal: 'resources/button.png'
+    background_color: self.getColor()
+    on_release: self.click()
