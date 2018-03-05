@@ -61,6 +61,8 @@
                     color: 2
                     state: 'down'
             Slider:
+                id: slider
+                on_value: app.toolManager.selectWidth()
                 orientation: 'horizontal'
                 size_hint_y: None
                 height: 60

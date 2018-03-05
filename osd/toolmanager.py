@@ -47,6 +47,9 @@ class ToolManager:
             self.drawColor = color
         self.drawingModel.selectColor(color)
 
+    def selectWidth(self):
+        self.drawingModel.selectWidth(self.screenManager.current_screen.ids.slider.value)
+
     def updateColorSelect(self):
         for colorWidget in ColoredButton.get_widgets('color'):
             colorWidget.allow_no_selection = self.selectedTool == self.erase
