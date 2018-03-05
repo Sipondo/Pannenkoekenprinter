@@ -6,8 +6,8 @@ from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.widget import Widget
 
-from osd.drawing import Brush, Fill, Erase, Square, Circle, Line
-from osd.util import UndoStack
+from drawing import Brush, Fill, Erase, Square, Circle, Line
+from util import UndoStack
 
 
 class OverviewScreen(Screen):
@@ -185,6 +185,6 @@ class PanPrintApp(App):
         return screenManager
 
 
-# Window.fullscreen = 'auto'
+Window.fullscreen = False
 Window.size = (1024, 600)
 PanPrintApp().run()
