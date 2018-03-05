@@ -6,71 +6,100 @@
 
         BoxLayout:
             orientation: 'vertical'
-            ImagedButton:
-                tool: app.toolManager.panprint
-                icon: 'resources/print.png'
-            ImagedButton:
-                tool: app.toolManager.brush
-                icon: 'resources/brush.png'
-            ImagedButton:
-                tool: app.toolManager.line
-                icon: 'resources/brush.png'
-            ColoredButton:
-                color: 0
+            BoxLayout:
+                orientation: 'horizontal'
+                ImagedButton:
+                    tool: app.toolManager.panprint
+                    icon: 'resources/print.png'
+                ImagedButton:
+                    tool: app.toolManager.undo
+                    icon: 'resources/undo.png'
+                    id: undo
+                    disabled: True
+                ImagedButton:
+                    tool: app.toolManager.redo
+                    icon: 'resources/redo.png'
+                    id: redo
+                    disabled: True
 
-        BoxLayout:
-            orientation: 'vertical'
-            ImagedButton:
-                tool: app.toolManager.undo
-                icon: 'resources/undo.png'
-            ImagedButton:
-                tool: app.toolManager.fill
-                icon: 'resources/fill.png'
-            ImagedButton:
-                tool: app.toolManager.circle
-                icon: 'resources/brush.png'
-            ColoredButton:
-                color: 1
+            BoxLayout:
+                orientation: 'horizontal'
+                ImagedToolButton:
+                    tool: app.toolManager.brush
+                    icon: 'resources/brush.png'
+                    state: 'down'
+                ImagedToolButton:
+                    tool: app.toolManager.fill
+                    icon: 'resources/fill.png'
+                ImagedToolButton:
+                    tool: app.toolManager.erase
+                    icon: 'resources/erase.png'
 
-        BoxLayout:
-            orientation: 'vertical'
-            ImagedButton:
-                tool: app.toolManager.redo
-                icon: 'resources/redo.png'
-            ImagedButton:
-                tool: app.toolManager.erase
-                icon: 'resources/erase.png'
-            ImagedButton:
-                tool: app.toolManager.square
-                icon: 'resources/brush.png'
-            ColoredButton:
-                color: 2
+            BoxLayout:
+                orientation: 'horizontal'
+                ImagedToolButton:
+                    tool: app.toolManager.line
+                    icon: 'resources/line.png'
+                ImagedToolButton:
+                    tool: app.toolManager.circle
+                    icon: 'resources/circle.png'
+                ImagedToolButton:
+                    tool: app.toolManager.square
+                    icon: 'resources/square.png'
 
-        Slider:
-            orientation: 'vertical'
-            size_hint_x: None
-            width: 30
+            BoxLayout:
+                orientation: 'horizontal'
+                ColoredButton:
+                    color: 0
+                ColoredButton:
+                    color: 1
+                ColoredButton:
+                    color: 2
+                    state: 'down'
+            Slider:
+                orientation: 'horizontal'
+                size_hint_y: None
+                height: 60
 
         DrawSpace:
             size_hint_x: None
             width: 600
 
-<ImagedButton@Button>:
+<ImagedToolButton>:
     background_normal: 'resources/button.png'
+    background_down: 'resources/button-tool-down.png'
+    background_color: [.094,.094,.341,1]
+    on_release: self.click()
+    group: 'tool'
+    allow_no_selection: False
+    Image:
+        source: self.parent.icon
+        x: self.parent.x + 15
+        y: self.parent.y + 12
+        size: 110, 110
+
+<ImagedButton>:
+    background_normal: 'resources/button.png'
+    background_down: 'resources/button-tool-down.png'
     background_color: [.094,.094,.341,1]
     on_release: self.click()
     Image:
         source: self.parent.icon
-        x: self.parent.x + 5
-        y: self.parent.y + 15
-        size: 120, 120
+        x: self.parent.x + 15
+        y: self.parent.y + 12
+        size: 110, 110
 
-<ColoredButton@Button>:
+<ColoredButton>:
     background_normal: 'resources/button.png'
+    background_down: 'resources/button-color-down.png'
     background_color: self.getColor()
     on_release: self.click()
+    group: 'color'
+    allow_no_selection: False
 
-<Overview>
-    Button:
-        text: 'Hello'
-        on_release: root.manager.current = 'drawing'
+<OverviewScreen>
+    BoxLayout:
+        orientation: 'horizontal'
+        Button:
+            text: 'Hello'
+            on_release: root.manager.current = 'drawing'
