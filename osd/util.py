@@ -23,22 +23,32 @@ class UndoStack:
             self.sp += 1
             if self.full():
                 self.redoCallback(False)
+            else:
+                del self.stack[self.sp:]
 
     def undo(self):
         if self.full():
             self.redoCallback(True)
         if not self.empty():
             self.sp -= 1
-        if self.empty():
-            self.undoCallback(False)
+            if self.empty():
+                self.undoCallback(False)
+            return self.stack[self.sp]
+        return None
 
     def redo(self):
         if self.empty():
             self.undoCallback(True)
         if not self.full():
             self.sp += 1
-        if self.full():
-            self.redoCallback(False)
+            if self.full():
+                self.redoCallback(False)
+            return self.top()
+
+    def top(self):
+        if self.sp == 0:
+            return None
+        return self.stack[self.sp - 1]
 
 
 class Pos:

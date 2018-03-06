@@ -6,7 +6,7 @@ from kivy.uix.togglebutton import ToggleButton
 
 class ImagedButton(Button):
     icon = 'resources/brush.png'
-    tool = -1
+    tool = None
 
     def __init__(self, **kwargs):
         super(ImagedButton, self).__init__(**kwargs)
@@ -50,3 +50,18 @@ class ColoredButton(ToggleButton):
 
     def click(self):
         App.get_running_app().toolManager.selectColor(self.color)
+
+
+class MenuButton(Button):
+    icon = 'resources/brush.png'
+    screen = 'overview'
+
+    def __init__(self, **kwargs):
+        super(MenuButton, self).__init__(**kwargs)
+        Clock.schedule_once(self.init, .1)
+
+    def init(self, _):
+        self.children[0].source = self.icon
+
+    def click(self):
+        App.get_running_app().screenManager.current = self.screen

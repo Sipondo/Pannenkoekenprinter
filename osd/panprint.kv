@@ -1,8 +1,12 @@
 #:kivy 1.10.0
-#:import ImagedToolButton osd.button.ImagedToolButton
-#:import ImagedButton osd.button.ImagedButton
-#:import ColoredButton osd.button.ColoredButton
-#:import DrawSpace osd.drawing.DrawSpace
+#:import ImagedToolButton osd.uibuttons.ImagedToolButton
+#:import ImagedButton osd.uibuttons.ImagedButton
+#:import ColoredButton osd.uibuttons.ColoredButton
+#
+#:import DrawSpace osd.drawspace.DrawSpace
+#
+#:import minDrawWidth osd.const.minDrawWidth
+#:import maxDrawWidth osd.const.maxDrawWidth
 
 <DrawingScreen>:
     BoxLayout:
@@ -66,6 +70,8 @@
                 orientation: 'horizontal'
                 size_hint_y: None
                 height: 60
+                min: minDrawWidth
+                max: maxDrawWidth
 
         DrawSpace:
             size_hint_x: None
@@ -103,9 +109,45 @@
     group: 'color'
     allow_no_selection: False
 
+<MenuButton>
+    background_normal: 'resources/button.png'
+    background_down: 'resources/button-tool-down.png'
+    background_color: [.094,.094,.341,1]
+    on_release: self.click()
+
+    size_hint_x: None
+    size_hint_y: None
+
+    width: 200
+    height: 200
+
+    Image:
+        source: self.parent.icon
+        x: self.parent.x + 25
+        y: self.parent.y + 25
+        size: 150, 150
+
 <OverviewScreen>
-    BoxLayout:
-        orientation: 'horizontal'
-        Button:
-            text: 'Hello'
-            on_release: root.manager.current = 'drawing'
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'center'
+        BoxLayout:
+            orientation: 'horizontal'
+
+            size_hint_x: None
+            size_hint_y: None
+
+            width: 600
+            height: 200
+
+            MenuButton:
+                icon: 'resources/brush.png'
+                screen: 'drawing'
+            MenuButton:
+                icon: 'resources/photo.png'
+                screen: 'photo'
+                disabled: True
+            MenuButton:
+                icon: 'resources/web.png'
+                screen: 'web'
+
