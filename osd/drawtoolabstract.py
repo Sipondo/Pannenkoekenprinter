@@ -4,7 +4,7 @@ class Tool:
 
     @property
     def color(self):
-        return .3 * float(self.drawspace.selectedColor + 1)
+        return self.drawspace.selectedColor
 
     @property
     def width(self):

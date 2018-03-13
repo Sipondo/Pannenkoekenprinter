@@ -4,6 +4,7 @@ from kivy.graphics.context_instructions import Color
 from kivy.graphics.vertex_instructions import Line
 
 from drawtoolabstract import Tool
+from util import dist
 
 
 class BrushTool(Tool):
@@ -11,10 +12,19 @@ class BrushTool(Tool):
 
     def down(self, touch):
         with self.canvas:
-            Color(self.color, self.color, self.color)
+            Color(self.color[0], self.color[1], self.color[2])
             self.line = Line(width=self.width, points=(touch.x, touch.y))
 
     def move(self, touch):
+        str = ''
+        if len(self.line.points) > 2 and dist(self.line.points[-4], self.line.points[-3], self.line.points[-2],
+                                              self.line.points[-1]) < 5:
+            self.line.points = self.line.points[:-2]
+            str += 'Line segment edited '
+        else:
+            str += 'Line segment added '
+        str += f'({self.line.points[-2]}, {self.line.points[-2]}) to ({touch.x}, {touch.y})'
+        print(str)
         self.line.points += (touch.x, touch.y)
 
     def up(self, _):
@@ -24,7 +34,7 @@ class BrushTool(Tool):
 class EraseTool(BrushTool):
     @property
     def color(self):
-        return 0
+        return [0, 0, 0, 0]
 
 
 class LineTool(Tool):
@@ -33,7 +43,7 @@ class LineTool(Tool):
 
     def down(self, touch):
         with self.canvas:
-            Color(self.color, self.color, self.color)
+            Color(self.color[0], self.color[1], self.color[2])
             self.start = (touch.x, touch.y)
             self.line = Line(width=self.width, points=self.start + self.start)
 
@@ -54,7 +64,7 @@ class CircleTool(Tool):
 
     def down(self, touch):
         with self.canvas:
-            Color(self.color, self.color, self.color)
+            Color(self.color[0], self.color[1], self.color[2])
             self.center = (touch.x, touch.y)
             self.line = Line(width=self.width, circle=self.center + (0,))
 
@@ -76,7 +86,7 @@ class SquareTool(Tool):
 
     def down(self, touch):
         with self.canvas:
-            Color(self.color, self.color, self.color)
+            Color(self.color[0], self.color[1], self.color[2])
             self.start = (touch.x, touch.y)
             self.line = Line(width=self.width, points=self.start + self.start)
 

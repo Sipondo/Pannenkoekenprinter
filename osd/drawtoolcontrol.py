@@ -13,7 +13,7 @@ class UndoTool(Tool):
 class RedoTool(Tool):
     def activate(self):
         drawobj = self.drawspace.stack.redo()
-        col = .3 * float(drawobj.color + 1)
-        self.drawspace.canvas.add(Color(col, col, col))
+        col = drawobj.color
+        self.drawspace.canvas.add(Color(col[0], col[1], col[2]))
         self.drawspace.canvas.add(drawobj.instruction)
         return False
