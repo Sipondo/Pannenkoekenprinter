@@ -1,10 +1,14 @@
 from kivy.app import App
 
-from osd.drawtools import UndoTool, SquareTool, CircleTool, LineTool, EraseTool, FillTool, BrushTool, RedoTool, Tool
+from const import initialTool, initialColor, initialWidth
+from drawtoolcontrol import UndoTool, RedoTool
+from drawtooldraw import SquareTool, CircleTool, LineTool, EraseTool, BrushTool, Tool
+from drawtoolfill import FillTool
 
 
 class PrintTool(Tool):
     def activate(self):
+        App.get_running_app().screenManager.current_screen.ids.drawspace.export_to_png('tmp/export.png')
         App.get_running_app().screenManager.current = 'overview'
 
 
@@ -26,8 +30,6 @@ class ToolManager:
         return App.get_running_app().screenManager
 
     def setDrawspace(self, drawspace):
-        from osd.const import initialTool, initialColor, initialWidth
-
         self.drawspace = drawspace
         self.drawspace.selectTool(initialTool(self.drawspace))
         self.drawspace.selectColor(initialColor)

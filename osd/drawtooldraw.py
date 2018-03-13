@@ -3,56 +3,7 @@ import math
 from kivy.graphics.context_instructions import Color
 from kivy.graphics.vertex_instructions import Line
 
-
-class Tool:
-    def __init__(self, drawspace):
-        self.drawspace = drawspace
-
-    @property
-    def color(self):
-        return .3 * float(self.drawspace.selectedColor + 1)
-
-    @property
-    def width(self):
-        return self.drawspace.selectedWidth
-
-    @property
-    def canvas(self):
-        return self.drawspace.canvas
-
-    def activate(self):
-        return True
-
-    def down(self, touch):
-        pass
-
-    def move(self, touch):
-        pass
-
-    def up(self, touch):
-        pass
-
-
-class Instruction:
-    def __init__(self, color, instruction):
-        self.color = color
-        self.instruction = instruction
-
-
-class UndoTool(Tool):
-    def activate(self):
-        drawobj = self.drawspace.stack.undo()
-        self.drawspace.canvas.remove(drawobj.instruction)
-        return False
-
-
-class RedoTool(Tool):
-    def activate(self):
-        drawobj = self.drawspace.stack.redo()
-        col = .3 * float(drawobj.color + 1)
-        self.drawspace.canvas.add(Color(col, col, col))
-        self.drawspace.canvas.add(drawobj.instruction)
-        return False
+from drawtoolabstract import Tool
 
 
 class BrushTool(Tool):
@@ -68,10 +19,6 @@ class BrushTool(Tool):
 
     def up(self, _):
         self.drawspace.addInstruction(self.line)
-
-
-class FillTool(Tool):
-    pass
 
 
 class EraseTool(BrushTool):

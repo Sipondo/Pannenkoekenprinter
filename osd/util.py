@@ -52,9 +52,11 @@ class UndoStack:
 
 
 class Pos:
-    def __init__(self, x, y):
+    def __init__(self, x, y, baseX, baseY):
         self.x = x
         self.y = y
+        self.baseX = baseX
+        self.baseY = baseY
 
 
 class Area:
@@ -64,9 +66,16 @@ class Area:
         self.width = w
         self.height = h
 
+    @property
+    def xf(self):
+        return self.x + self.width
+
+    def yf(self):
+        return self.y + self.height
+
 
 def bindArea(p, a, padding):
-    pos = Pos(p.x, p.y)
+    pos = Pos(p.x, p.y, p.x, p.y)
     if p.x < a.x + padding:
         pos.x = a.x + padding
     if p.y < a.y + padding:
@@ -75,4 +84,12 @@ def bindArea(p, a, padding):
         pos.x = a.x + a.width - padding
     if p.y > a.y + a.height - padding:
         pos.y = a.y + a.height - padding
+    return pos
+
+
+def normalize(pos):
+    pos.x -= pos.baseX
+    pos.y -= pos.baseY
+    pos.baseX = 0
+    pos.baseY = 0
     return pos

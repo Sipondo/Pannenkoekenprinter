@@ -2,11 +2,12 @@ from kivy.app import App
 from kivy.core.window import Window
 from kivy.uix.screenmanager import Screen, ScreenManager
 
-from osd.drawtoolmanager import ToolManager
+from drawtoolmanager import ToolManager
 
 
 class OverviewScreen(Screen):
-    pass
+    def goto(self, screen):
+        pass
 
 
 class DrawingScreen(Screen):
@@ -20,10 +21,11 @@ class PanPrintApp(App):
     def build(self):
         self.title = 'Pannenkoekenswag'
 
-        self.screenManager.add_widget(DrawingScreen(name='drawing'))
         self.screenManager.add_widget(OverviewScreen(name='overview'))
-
         self.screenManager.current = 'overview'
+
+        self.screenManager.add_widget(DrawingScreen(name='drawing'))
+
         return self.screenManager
 
 

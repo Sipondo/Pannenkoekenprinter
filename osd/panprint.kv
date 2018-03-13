@@ -1,12 +1,13 @@
 #:kivy 1.10.0
-#:import ImagedToolButton osd.uibuttons.ImagedToolButton
-#:import ImagedButton osd.uibuttons.ImagedButton
-#:import ColoredButton osd.uibuttons.ColoredButton
+#:import ImagedToolButton uibuttons.ImagedToolButton
+#:import ImagedButton uibuttons.ImagedButton
+#:import ColoredButton uibuttons.ColoredButton
 #
-#:import DrawSpace osd.drawspace.DrawSpace
+#:import DrawSpace drawspace.DrawSpace
 #
-#:import minDrawWidth osd.const.minDrawWidth
-#:import maxDrawWidth osd.const.maxDrawWidth
+#:import minDrawWidth const.minDrawWidth
+#:import maxDrawWidth const.maxDrawWidth
+#:import initialWidth const.initialWidth
 
 <DrawingScreen>:
     BoxLayout:
@@ -72,8 +73,10 @@
                 height: 60
                 min: minDrawWidth
                 max: maxDrawWidth
+                value: initialWidth
 
         DrawSpace:
+            id: drawspace
             size_hint_x: None
             width: 600
 
