@@ -2,7 +2,7 @@ from kivy.app import App
 from kivy.core.window import Window
 from kivy.uix.screenmanager import Screen, ScreenManager
 
-from osd.drawtoolmanager import ToolManager
+from drawtoolmanager import ToolManager
 
 
 class OverviewScreen(Screen):

@@ -2,8 +2,8 @@ from kivy.app import App
 from kivy.clock import Clock
 from kivy.uix.widget import Widget
 
-from osd.drawtools import Instruction
-from osd.util import UndoStack, Area, bindArea
+from drawtools import Instruction
+from util import UndoStack, Area, bindArea
 
 
 class DrawSpace(Widget):

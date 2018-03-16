@@ -1,4 +1,4 @@
-from osd.drawtools import BrushTool
+from drawtools import BrushTool
 
 minDrawWidth = 5
 maxDrawWidth = 50
