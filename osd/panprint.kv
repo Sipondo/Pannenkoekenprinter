@@ -7,6 +7,12 @@
 #
 #:import minDrawWidth const.minDrawWidth
 #:import maxDrawWidth const.maxDrawWidth
+<<<<<<< HEAD
+=======
+#:import initialWidth const.initialWidth
+#
+#:import colors const.colors
+>>>>>>> 26a9e09dc633107ee15ab9c2aef401210eb8027f
 
 <DrawingScreen>:
     BoxLayout:
@@ -58,11 +64,11 @@
             BoxLayout:
                 orientation: 'horizontal'
                 ColoredButton:
-                    color: 0
+                    color: colors[0]
                 ColoredButton:
-                    color: 1
+                    color: colors[1]
                 ColoredButton:
-                    color: 2
+                    color: colors[2]
                     state: 'down'
             Slider:
                 id: slider
@@ -72,8 +78,10 @@
                 height: 60
                 min: minDrawWidth
                 max: maxDrawWidth
+                value: initialWidth
 
         DrawSpace:
+            id: drawspace
             size_hint_x: None
             width: 600
 
@@ -104,7 +112,7 @@
 <ColoredButton>:
     background_normal: 'resources/button.png'
     background_down: 'resources/button-color-down.png'
-    background_color: self.getColor()
+    background_color: self.color
     on_release: self.click()
     group: 'color'
     allow_no_selection: False

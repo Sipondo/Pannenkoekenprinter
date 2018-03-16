@@ -35,18 +35,14 @@ class ImagedToolButton(ToggleButton):
 
 
 class ColoredButton(ToggleButton):
-    color = 0
+    color = [0, 0, 0, 0]
 
     def __init__(self, **kwargs):
         super(ColoredButton, self).__init__(**kwargs)
         Clock.schedule_once(self.init, .1)
 
     def init(self, _):
-        self.background_color = self.getColor()
-
-    def getColor(self):
-        col = float(self.color + 1) * .3
-        return [col, col, col, 1]
+        self.background_color = self.color
 
     def click(self):
         App.get_running_app().toolManager.selectColor(self.color)

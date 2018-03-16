@@ -2,7 +2,12 @@ from kivy.app import App
 from kivy.clock import Clock
 from kivy.uix.widget import Widget
 
+<<<<<<< HEAD
 from drawtools import Instruction
+=======
+from drawtoolabstract import Instruction
+from drawtooldraw import EraseTool
+>>>>>>> 26a9e09dc633107ee15ab9c2aef401210eb8027f
 from util import UndoStack, Area, bindArea
 
 
@@ -13,23 +18,24 @@ class DrawSpace(Widget):
 
     touchState = False
     stack = None
+    area = None
 
     def __init__(self, **kwargs):
         super(DrawSpace, self).__init__(**kwargs)
         Clock.schedule_once(self.init, .1)
 
+    _area = None
+
+    @property
+    def area(self):
+        if self._area is None:
+            self._area = Area(self.x, self.y, self.width, self.height)
+        return self._area
+
     def init(self, _):
         toolManager = App.get_running_app().toolManager
         toolManager.setDrawspace(self)
         self.stack = UndoStack(toolManager.undoUI, toolManager.redoUI)
-
-    __area = None
-
-    @property
-    def area(self):
-        if self.__area is None:
-            self.__area = Area(self.x, self.y, self.width, self.height)
-        return self.__area
 
     def selectTool(self, tool):
         self.selectedTool = tool
@@ -41,7 +47,11 @@ class DrawSpace(Widget):
         self.selectedWidth = width
 
     def addInstruction(self, instruction):
-        self.stack.push(Instruction(self.selectedColor, instruction))
+        if type(self.selectedTool) is EraseTool:
+            color = -1
+        else:
+            color = self.selectedColor
+        self.stack.push(Instruction(color, instruction))
 
     def on_touch_down(self, touch):
         if self.collide_point(touch.x, touch.y):
