@@ -107,6 +107,19 @@ for segment in seg_bot:
         print("slice_vector")
         drv.print_vector(vector)
 
+for segment in seg_mid:
+    print("slice_segment_mid")
+    for vector in measure.find_contours(segment,.1):
+        print("slice_vector")
+        drv.print_vector(vector)
+
+for segment in seg_top:
+    print("slice_segment_top")
+    for vector in measure.find_contours(segment,.1):
+        print("slice_vector")
+        drv.print_vector(vector)
+
+
 # for n, contour in enumerate(contours):
 #     plt.plot(contour[:, 1], 256-contour[:, 0], linewidth=5)
 #     print(n)
