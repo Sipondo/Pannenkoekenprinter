@@ -148,3 +148,4 @@ plt.imshow(seg_bot[0])
 #plt.imshow(image[offset:-offset,offset:-offset], alpha=0.6)
 plt.imshow(image, alpha=0.6)
 plt.show()
+pass
