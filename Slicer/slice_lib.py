@@ -1,7 +1,7 @@
 
 import numpy as np
 from PIL import Image
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import scipy.signal
 from skimage import morphology as mp
 from skimage import exposure

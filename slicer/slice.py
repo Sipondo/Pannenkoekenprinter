@@ -16,9 +16,9 @@ sys.path.append(file_dir)
 import slice_lib as slib
 import numpy as np
 from PIL import Image
-import matplotlib
+#import matplotlib
 #%matplotlib qt5
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import scipy.signal
 from skimage import morphology as mp
 from skimage import exposure
@@ -98,7 +98,7 @@ contours = measure.find_contours(seg_bot[0],.1)
 
 contour = contours[1]
 #print(contour)
-plt.plot(contour[:, 1], 256-contour[:, 0], linewidth=5)
+#plt.plot(contour[:, 1], 256-contour[:, 0], linewidth=5)
 
 import driver as drv
 drv.print_vector(contour)
