@@ -45,7 +45,7 @@ atexit.register(turnOffMotors)
 
 myStepper1 = mh.getStepper(200, 1)  # 200 steps/rev, motor port #1                 # 30 RPM
 myStepper2 = mh.getStepper(200, 2)  # 200 steps/rev, motor port #1            # 30 RPM
-
+GPIO.cleanup(7)
 def stepper_worker(myStepper, distance, speed):
     myStepper.setSpeed(int(speed))
     if (distance > 0):
@@ -55,7 +55,7 @@ def stepper_worker(myStepper, distance, speed):
             myStepper.step(abs(distance), Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.SINGLE)
 
 
-def move(x, y):
+def move(x, y, speed):
     x = int(x/1)
     y = int(y/-1)
     global pos_x, pos_y
@@ -71,9 +71,9 @@ def move(x, y):
     #    st2 = threading.Thread(target=stepper_worker, args=(myStepper2, y, max(0, -3.0 + 24.0 * (abs(y)/max_distance))))
 
     if (x != 0):
-        st1 = threading.Thread(target=stepper_worker, args=(myStepper1, x, 20))
+        st1 = threading.Thread(target=stepper_worker, args=(myStepper1, x, speed))
     if (y != 0):
-        st2 = threading.Thread(target=stepper_worker, args=(myStepper2, y, 20))
+        st2 = threading.Thread(target=stepper_worker, args=(myStepper2, y, speed))
 
     if (x != 0):
         st1.start()
@@ -88,27 +88,18 @@ def move(x, y):
 #used_set = instruction_dictionary['kill_me']
 
 def move_vector(vector):
-    GPIO.cleanup(7)
-    sleep(.2)
     for next_instruction in vector:
-        move(next_instruction[0], next_instruction[1])
-    print("beslag uit!")
-    GPIO.cleanup(7)
-    sleep(.2)
-    pass
+        move(next_instruction[0], next_instruction[1], 40)
 
 def print_vector(vector):
-    GPIO.cleanup(7)
-    sleep(.2)
     init_pos = vector[0]
-    move(init_pos[0], init_pos[1])
-    sleep(.2)
+    move(init_pos[0], init_pos[1], 40)
     print("beslag aan!")
     GPIO.setup([7], GPIO.OUT)
     GPIO.output(7, 1)
     sleep(.2)
     for next_instruction in vector[1:]:
-        move(next_instruction[0], next_instruction[1])
+        move(next_instruction[0], next_instruction[1], 20)
     print("beslag uit!")
     GPIO.cleanup(7)
     sleep(.2)
