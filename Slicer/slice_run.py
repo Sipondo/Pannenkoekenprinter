@@ -94,14 +94,15 @@ def MultiContourSegment(segment):
 
 
 from skimage import measure
-
+# contours = measure.find_contours(seg_bot[0],.1)
+#
+# contour = contours[1]
 #print(contour)
 #plt.plot(contour[:, 1], 256-contour[:, 0], linewidth=5)
 
 import driver as drv
-drv.print_vector(contour)
-
-
+for segment in seg_bot:
+    drv.print_vector(measure.find_contours(segment,.1))
 
 # for n, contour in enumerate(contours):
 #     plt.plot(contour[:, 1], 256-contour[:, 0], linewidth=5)
