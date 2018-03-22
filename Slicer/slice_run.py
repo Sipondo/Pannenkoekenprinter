@@ -29,7 +29,7 @@ IMAGE_FACTOR = (IMAGE_SIZE[0]*IMAGE_SIZE[1]) ** (1. / 4) / 4
 
 gaussian = slib.gaussian_2d(IMAGE_FACTOR)
 
-image_names = ["eiffel.jpg", "lisa.jpg", "fish.jpg"]
+image_names = ["eiffel.jpg", "anarchy.jpg", "fish.jpg"]
 #image_names = ["Slicer\\eiffel.jpg", "Slicer\\lisa.jpg", "Slicer\\fish.jpg"]
 
 for imgname in image_names[1:2]:
@@ -107,11 +107,11 @@ for segment in seg_bot:
         print("slice_vector")
         drv.print_vector(vector)
 
-for segment in seg_mid:
-    print("slice_segment_mid")
-    for vector in measure.find_contours(segment,.1):
-        print("slice_vector")
-        drv.print_vector(vector)
+# for segment in seg_mid:
+#     print("slice_segment_mid")
+#     for vector in measure.find_contours(segment,.1):
+#         print("slice_vector")
+#         drv.print_vector(vector)
 
 for segment in seg_top:
     print("slice_segment_top")
