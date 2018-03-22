@@ -103,3 +103,10 @@ def print_vector(vector):
     print("beslag uit!")
     GPIO.cleanup(7)
     sleep(.2)
+
+def flush_the_tube():
+    GPIO.setup([7], GPIO.OUT)
+    GPIO.output(7, 1)
+    sleep(30)
+    GPIO.cleanup(7)
+    sleep(.2)
