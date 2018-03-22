@@ -89,11 +89,11 @@ def move(x, y, speed):
 
 def move_vector(vector):
     for next_instruction in vector:
-        move(next_instruction[0], next_instruction[1], 40)
+        move(next_instruction[0], next_instruction[1], 30)
 
 def print_vector(vector):
     init_pos = vector[0]
-    move(init_pos[0], init_pos[1], 40)
+    move(init_pos[0], init_pos[1], 30)
     print("beslag aan!")
     GPIO.setup([7], GPIO.OUT)
     GPIO.output(7, 1)
