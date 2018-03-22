@@ -103,9 +103,9 @@ from skimage import measure
 import driver as drv
 for segment in seg_bot:
     print("slice_segment_bot")
-    for vector in segment:
+    for vector in measure.find_contours(segment,.1):
         print("slice_vector")
-        drv.print_vector(measure.find_contours(vector,.1))
+        drv.print_vector(vector)
 
 # for n, contour in enumerate(contours):
 #     plt.plot(contour[:, 1], 256-contour[:, 0], linewidth=5)
