@@ -107,6 +107,6 @@ def print_vector(vector):
 def flush_the_tube():
     GPIO.setup([7], GPIO.OUT)
     GPIO.output(7, 1)
-    sleep(30)
+    sleep(300)
     GPIO.cleanup(7)
     sleep(.2)
