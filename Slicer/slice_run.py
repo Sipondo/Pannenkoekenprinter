@@ -57,10 +57,9 @@ for imgname in image_names[1:2]:
     # ax.contourf3D(x, y, display_layered, cmap="gist_ncar")
     # plt.draw()
     # plt.show()
-
-seg_mid[0][:,50].shape
-np.insert(seg_mid[0][:,50][:-1],0,True).shape
-np.flip(np.argwhere(np.logical_xor(np.insert(seg_mid[0][:,50][:-1],0,False),seg_mid[0][:,50])),0)
+#
+# np.insert(seg_mid[0][:,50][:-1],0,True).shape
+# np.flip(np.argwhere(np.logical_xor(np.insert(seg_mid[0][:,50][:-1],0,False),seg_mid[0][:,50])),0)
 
 vectors = []
 # for img in (seg_bot+seg_mid+seg_top):
