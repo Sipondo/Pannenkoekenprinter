@@ -45,7 +45,8 @@ atexit.register(turnOffMotors)
 
 myStepper1 = mh.getStepper(200, 1)  # 200 steps/rev, motor port #1                 # 30 RPM
 myStepper2 = mh.getStepper(200, 2)  # 200 steps/rev, motor port #1            # 30 RPM
-
+pos_x = 0
+pos_y = 0
 
 def stepper_worker(myStepper, distance, speed):
     myStepper.setSpeed(int(speed))
@@ -59,10 +60,11 @@ def stepper_worker(myStepper, distance, speed):
 def move(x, y):
     x = int(x/1)
     y = int(y/-1)
-    # global pos_x, pos_y
     # max_distance = math.sqrt(1.0 * x * x + y * y)
-    # pos_x = pos_x + x;
-    # pos_y = pos_y + y;
+    x = x - pos_x
+    y = y - pos_y
+    pos_x = pos_x + x;
+    pos_y = pos_y + y;
 
     # if (x != 0):
     #    st1 = threading.Thread(target=stepper_worker, args=(myStepper1, x, max(0, 30.0 * (abs(x)/max_distance))))

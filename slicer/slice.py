@@ -100,6 +100,7 @@ contour = contours[1]
 #print(contour)
 #plt.plot(contour[:, 1], 256-contour[:, 0], linewidth=5)
 
+print(contour[0])
 import driver as drv
 drv.print_vector(contour)
 
