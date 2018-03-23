@@ -58,7 +58,7 @@ def Slice_Image(picture, SQRSIZE=500, BLURRED=True, EQUALIZED=True, CWHITE=False
         import matplotlib.pyplot as plt
         plt.axis('equal')
     else:
-        import driver as drv
+        import Slicer.driver as drv
 
     for segment in seg_bot[:1]:
         print("slice_segment_bot")
