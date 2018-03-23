@@ -89,7 +89,7 @@ def move(x, y, speed):
 
 def move_vector(vector):
     for next_instruction in vector:
-        move(next_instruction[0]+30, next_instruction[1]+30, 30)
+        move(next_instruction[0]+30, next_instruction[1]+30, 20)
 
 def print_vector(vector):
     init_pos = vector[0]
