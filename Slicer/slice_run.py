@@ -28,8 +28,10 @@ def RapidContour(segment, BATTER_SIZE):
         vector_output.extend(vector_list)
     return vector_output
 
-def Slice_Image(picture, SQRSIZE=500, BLURRED=True, EQUALIZED=True, CWHITE=False, INVERTED=False):
-
+def Slice_Image(picture, SQRSIZE=500, BLURRED=True, EQUALIZED=True, CWHITE=False, INVERTED=False, RETURN_IMG=False):
+    RUNNING_LOCALLY = os.path.isfile('Slicer/no_print')
+    if RETURN_IMG:
+        RUNNING_LOCALLY = True
     #############CONSTANTS
     #SQRSIZE = 500
     IMAGE_SIZE=(SQRSIZE,SQRSIZE)
@@ -81,5 +83,8 @@ def Slice_Image(picture, SQRSIZE=500, BLURRED=True, EQUALIZED=True, CWHITE=False
                 plt.plot(vector[:, 1], 256-vector[:, 0], linewidth=5, color='moccasin')
             else:
                 drv.print_vector(vector/(SQRSIZE/3))
-    if RUNNING_LOCALLY:
+    if RETURN_IMG:
+        plt.axis("off")
+        plt.savefig('fig.png', bbox_inches='tight', pad_inches = 0)
+    else:
         plt.show()
