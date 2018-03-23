@@ -29,7 +29,7 @@ IMAGE_FACTOR = (IMAGE_SIZE[0]*IMAGE_SIZE[1]) ** (1. / 4) / 4
 
 gaussian = slib.gaussian_2d(IMAGE_FACTOR)
 
-image_names = ["eiffel.jpg", "lisa.jpg", "fish.jpg"]
+image_names = ["eiffel.jpg", "icon_preview.png", "fish.jpg"]
 #image_names = ["Slicer\\eiffel.jpg", "Slicer\\lisa.jpg", "Slicer\\fish.jpg"]
 
 for imgname in image_names[1:2]:
@@ -57,10 +57,9 @@ for imgname in image_names[1:2]:
     # ax.contourf3D(x, y, display_layered, cmap="gist_ncar")
     # plt.draw()
     # plt.show()
-
-seg_mid[0][:,50].shape
-np.insert(seg_mid[0][:,50][:-1],0,True).shape
-np.flip(np.argwhere(np.logical_xor(np.insert(seg_mid[0][:,50][:-1],0,False),seg_mid[0][:,50])),0)
+#
+# np.insert(seg_mid[0][:,50][:-1],0,True).shape
+# np.flip(np.argwhere(np.logical_xor(np.insert(seg_mid[0][:,50][:-1],0,False),seg_mid[0][:,50])),0)
 
 vectors = []
 # for img in (seg_bot+seg_mid+seg_top):
@@ -94,13 +93,30 @@ def MultiContourSegment(segment):
 
 
 from skimage import measure
-
+# contours = measure.find_contours(seg_bot[0],.1)
+#
+# contour = contours[1]
 #print(contour)
 #plt.plot(contour[:, 1], 256-contour[:, 0], linewidth=5)
 
 import driver as drv
-drv.print_vector(contour)
+for segment in seg_bot:
+    print("slice_segment_bot")
+    for vector in measure.find_contours(segment,.1):
+        print("slice_vector")
+        drv.print_vector(vector)
 
+for segment in seg_mid:
+    print("slice_segment_mid")
+    for vector in measure.find_contours(segment,.1):
+        print("slice_vector")
+        drv.print_vector(vector)
+
+for segment in seg_top:
+    print("slice_segment_top")
+    for vector in measure.find_contours(segment,.1):
+        print("slice_vector")
+        drv.print_vector(vector)
 
 
 # for n, contour in enumerate(contours):
