@@ -78,7 +78,7 @@ def Slice_Image(picture, SQRSIZE=500, BLURRED=True, EQUALIZED=True, CWHITE=False
                 if RUNNING_LOCALLY:
                     plt.plot(vector[:, 1], 256-vector[:, 0], linewidth=5, color='saddlebrown')
                 else:
-                    drv.print_vector(vector/(SQRSIZE/250.0))
+                    drv.print_vector(vector/(SQRSIZE/350.0))
 
         # for segment in seg_mid[:1]:
         #     print("slice_segment_mid")
@@ -94,7 +94,7 @@ def Slice_Image(picture, SQRSIZE=500, BLURRED=True, EQUALIZED=True, CWHITE=False
                 if RUNNING_LOCALLY:
                     plt.plot(vector[:, 1], 256-vector[:, 0], linewidth=5, color='moccasin')
                 else:
-                    drv.print_vector(vector/(SQRSIZE/250.0))
+                    drv.print_vector(vector/(SQRSIZE/350.0))
     else:
         for segment in seg_bot[:1]:
             print("slice_segment_bot")
