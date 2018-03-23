@@ -1,4 +1,3 @@
-
 import numpy as np
 from PIL import Image
 #import matplotlib.pyplot as plt
@@ -18,10 +17,14 @@ def gaussian_2d(sigma_mm, voxel_size = [1,1]):
             kernel[i,j] = constant * np.exp(-1.0*(x[i]*x[i]+y[j]*y[j])/(2.0*sigma_mm*sigma_mm))
     return kernel, x, y
 
-def segment_image(pic_array, gaussian):
+def segment_image(pic_array, gaussian, blurred, equalized):
     ###Blur image with the specified gaussian kernel
-    pic_convolved = scipy.signal.fftconvolve(pic_array, gaussian[0], mode='same')
-    pic_convolved = exposure.equalize_hist(pic_convolved)
+    if(blurred):
+        pic_convolved = scipy.signal.fftconvolve(pic_array, gaussian[0], mode='same')
+    else:
+        pic_convolved = pic_array
+    if(equalized):
+        pic_convolved = exposure.equalize_hist(pic_convolved)
 
     ###Segment middle layer
     mean = np.mean(pic_convolved) + np.std(pic_convolved)
@@ -47,22 +50,26 @@ def segment_image(pic_array, gaussian):
     middle_imgs = []
     top_imgs = []
 
-    threshold = conn_comps_layer0.shape[0]*conn_comps_layer0.shape[1]/16
-    for i in range(1,np.max(conn_comps_layer0)):
+    threshold = -1#conn_comps_layer0.shape[0]*conn_comps_layer0.shape[1]/64
+    for i in range(0,np.max(conn_comps_layer0)):
         new_layer = (conn_comps_layer0==i)
         if np.sum(new_layer)>threshold:
+            #new_layer = np.invert(new_layer)
             bottom_imgs.append(new_layer)
             layered_output_image = layered_output_image + new_layer*(1+i)
 
-    for i in range(1,np.max(conn_comps_layer1)):
+    #threshold = -1
+    for i in range(0,np.max(conn_comps_layer1)):
         new_layer = (conn_comps_layer1==i)
         if np.sum(new_layer)>threshold:
+            #new_layer = np.invert(new_layer)
             middle_imgs.append(new_layer)
             layered_output_image = layered_output_image + new_layer*(11+i)
 
-    for i in range(1,np.max(conn_comps_layer2)):
+    for i in range(0,np.max(conn_comps_layer2)):
         new_layer = (conn_comps_layer2==i)
         if np.sum(new_layer)>threshold:
+            #new_layer = np.invert(new_layer)
             top_imgs.append(new_layer)
             layered_output_image = layered_output_image + new_layer*(21+i)
 
