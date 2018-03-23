@@ -2,12 +2,8 @@ from kivy.app import App
 from kivy.clock import Clock
 from kivy.uix.widget import Widget
 
-<<<<<<< HEAD
-from drawtools import Instruction
-=======
 from drawtoolabstract import Instruction
 from drawtooldraw import EraseTool
->>>>>>> 26a9e09dc633107ee15ab9c2aef401210eb8027f
 from util import UndoStack, Area, bindArea
 
 
@@ -66,3 +62,7 @@ class DrawSpace(Widget):
         if self.touchState:
             self.selectedTool.up(bindArea(touch, self.area, self.selectedWidth))
         self.touchState = False
+
+    def clear(self):
+        self.canvas.clear()
+        self.init(0)
