@@ -9,7 +9,9 @@ from drawtoolfill import FillTool
 class PrintTool(Tool):
     def activate(self):
         App.get_running_app().screenManager.current_screen.ids.drawspace.export_to_png('tmp/export.png')
+        App.get_running_app().screenManager.current_screen.ids.drawspace.clear()
         App.get_running_app().screenManager.current = 'overview'
+        # TODO: call slicer
 
 
 class ToolManager:

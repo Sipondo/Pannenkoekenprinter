@@ -62,3 +62,7 @@ class DrawSpace(Widget):
         if self.touchState:
             self.selectedTool.up(bindArea(touch, self.area, self.selectedWidth))
         self.touchState = False
+
+    def clear(self):
+        self.canvas.clear()
+        self.init(0)

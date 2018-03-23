@@ -20,11 +20,6 @@ class BrushTool(Tool):
         if len(self.line.points) > 2 and dist(self.line.points[-4], self.line.points[-3], self.line.points[-2],
                                               self.line.points[-1]) < 5:
             self.line.points = self.line.points[:-2]
-            str += 'Line segment edited '
-        else:
-            str += 'Line segment added '
-        str += f'({self.line.points[-2]}, {self.line.points[-2]}) to ({touch.x}, {touch.y})'
-        print(str)
         self.line.points += (touch.x, touch.y)
 
     def up(self, _):
