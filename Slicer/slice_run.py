@@ -28,7 +28,7 @@ def RapidContour(segment, BATTER_SIZE):
         vector_output.extend(vector_list)
     return vector_output
 
-def Slice_Image(picture, SQRSIZE=500, BLURRED=True, EQUALIZED=True):
+def Slice_Image(picture, SQRSIZE=500, BLURRED=True, EQUALIZED=True, CWHITE=False, INVERTED=False):
 
     #############CONSTANTS
     #SQRSIZE = 500
@@ -45,22 +45,26 @@ def Slice_Image(picture, SQRSIZE=500, BLURRED=True, EQUALIZED=True):
     picture = picture.resize(IMAGE_SIZE, Image.BICUBIC)
     pic_array = np.array(picture)
 
-    display_image, display_layered,\
-     seg_bot, seg_mid, seg_top = slib.segment_image(pic_array, gaussian, BLURRED, EQUALIZED)
+    if INVERTED:
+        display_image, display_layered,\
+         seg_top, seg_mid, seg_bot = slib.segment_image(pic_array, gaussian, BLURRED, EQUALIZED, CWHITE)
+    else:
+        display_image, display_layered,\
+         seg_bot, seg_mid, seg_top = slib.segment_image(pic_array, gaussian, BLURRED, EQUALIZED, CWHITE)
 
     if RUNNING_LOCALLY:
         import matplotlib.pyplot as plt
         plt.axis('equal')
     else:
         import driver as drv
-    
+
     for segment in seg_bot[:1]:
         print("slice_segment_bot")
         for vector in RapidContour(segment, BATTER_SIZE):
             if RUNNING_LOCALLY:
                 plt.plot(vector[:, 1], 256-vector[:, 0], linewidth=5, color='saddlebrown')
             else:
-                drv.print_vector(vector)
+                drv.print_vector(vector/(SQRSIZE/3))
 
     for segment in seg_mid[:1]:
         print("slice_segment_mid")
@@ -68,7 +72,7 @@ def Slice_Image(picture, SQRSIZE=500, BLURRED=True, EQUALIZED=True):
             if RUNNING_LOCALLY:
                 plt.plot(vector[:, 1], 256-vector[:, 0], linewidth=5, color='goldenrod')
             else:
-                drv.print_vector(vector)
+                drv.print_vector(vector/(SQRSIZE/3))
 
     for segment in seg_top[:1]:
         print("slice_segment_top")
@@ -76,6 +80,6 @@ def Slice_Image(picture, SQRSIZE=500, BLURRED=True, EQUALIZED=True):
             if RUNNING_LOCALLY:
                 plt.plot(vector[:, 1], 256-vector[:, 0], linewidth=5, color='moccasin')
             else:
-                drv.print_vector(vector)
+                drv.print_vector(vector/(SQRSIZE/3))
     if RUNNING_LOCALLY:
         plt.show()
