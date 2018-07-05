@@ -1,7 +1,7 @@
 import Slicer.slice_run as slicer
 from PIL import Image
 
-imgname = "images/thalia.png"
+imgname = "images/rtilted.jpg"
 picture = Image.open(imgname).convert("L")
 slicer.Slice_Image(picture, SQRSIZE=400, BLURRED=True, EQUALIZED=False,\
  CWHITE=False, INVERTED=False, RETURN_IMG=False, SINGLE=False,\
