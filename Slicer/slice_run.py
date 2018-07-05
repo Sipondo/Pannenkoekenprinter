@@ -22,7 +22,7 @@ def RapidContour(segment, BATTER_SIZE, erode=True):
     vector_list = [0]
     vector_output = []
     if erode:
-        segment = mp.binary_dilation(segment, mp.disk(BATTER_SIZE//2))
+        segment = mp.binary_dilation(segment, mp.disk(BATTER_SIZE//3*2))
     while vector_list:
         vector_list = []
         vector_list = measure.find_contours(segment,.1)
