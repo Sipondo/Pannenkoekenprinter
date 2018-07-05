@@ -1,8 +1,7 @@
+from drawtoolmanager import ToolManager
 from kivy.app import App
 from kivy.core.window import Window
 from kivy.uix.screenmanager import Screen, ScreenManager
-
-from drawtoolmanager import ToolManager
 
 
 class OverviewScreen(Screen):
@@ -30,5 +29,5 @@ class PanPrintApp(App):
 
 
 Window.fullscreen = True
-# Window.size = (1024, 600)
+Window.size = (1024, 600)
 PanPrintApp().run()
