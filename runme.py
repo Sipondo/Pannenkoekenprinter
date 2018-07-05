@@ -1,9 +1,9 @@
 import Slicer.slice_run as slicer
 from PIL import Image
 
-imgname = "images/lisa.jpg"
+imgname = "images/thalia.png"
 picture = Image.open(imgname).convert("L")
-slicer.Slice_Image(picture, SQRSIZE=500, BLURRED=False, EQUALIZED=False,\
+slicer.Slice_Image(picture, SQRSIZE=500, BLURRED=True, EQUALIZED=False,\
  CWHITE=False, INVERTED=False, RETURN_IMG=False, SINGLE=False,\
   BOT=True, MID=True, TOP=True)
 #

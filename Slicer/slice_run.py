@@ -66,6 +66,8 @@ def Slice_Image(picture, SQRSIZE=500, BLURRED=True, EQUALIZED=True, CWHITE=False
          seg_bot, seg_mid, seg_top = slib.segment_image(pic_array, gaussian, BLURRED, EQUALIZED, CWHITE)
 
     if RUNNING_LOCALLY:
+        import matplotlib
+        matplotlib.use("QT5Agg")
         import matplotlib.pyplot as plt
         plt.axis('equal')
     else:
