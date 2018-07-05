@@ -23,9 +23,9 @@ def RapidContour(segment, BATTER_SIZE):
     vector_output = []
     while vector_list:
         vector_list = []
-        segment = mp.dilation(segment, mp.disk(BATTER_SIZE))
         vector_list = measure.find_contours(segment,.1)
         vector_output.extend(vector_list)
+        segment = mp.dilation(segment, mp.disk(BATTER_SIZE))
     return vector_output
 
 def SingleContour(segment, BATTER_SIZE):
@@ -39,7 +39,7 @@ def SingleContour(segment, BATTER_SIZE):
         return vector_list
     return vector_output
 
-def Slice_Image(picture, SQRSIZE=500, BLURRED=True, EQUALIZED=True, CWHITE=False, INVERTED=False, RETURN_IMG=False, SINGLE=False):
+def Slice_Image(picture, SQRSIZE=500, BLURRED=True, EQUALIZED=True, CWHITE=False, INVERTED=False, RETURN_IMG=False, SINGLE=False, BOT=True, MID=True, TOP=True):
     RUNNING_LOCALLY = os.path.isfile('Slicer/no_print')
     if RETURN_IMG:
         RUNNING_LOCALLY = True
@@ -72,53 +72,57 @@ def Slice_Image(picture, SQRSIZE=500, BLURRED=True, EQUALIZED=True, CWHITE=False
         import Slicer.driver as drv
 
     if SINGLE:
-        for segment in seg_bot[:1]:
-            print("slice_segment_bot")
-            for vector in SingleContour(segment, BATTER_SIZE):
-                if RUNNING_LOCALLY:
-                    plt.plot(vector[:, 1], 256-vector[:, 0], linewidth=5, color='saddlebrown')
-                else:
-                    drv.print_vector(vector/(SQRSIZE/350.0))
-
-        # for segment in seg_mid[:1]:
-        #     print("slice_segment_mid")
-        #     for vector in SingleContour(segment, BATTER_SIZE):#measure.find_contours(segment,.1):
-        #         if RUNNING_LOCALLY:
-        #             plt.plot(vector[:, 1], 256-vector[:, 0], linewidth=5, color='goldenrod')
-        #         else:
-        #             drv.print_vector(vector/(SQRSIZE/350.0))
-
-        for segment in seg_top[:1]:
-            print("slice_segment_top")
-            for vector in SingleContour(segment, BATTER_SIZE):#measure.find_contours(segment,.1):
-                if RUNNING_LOCALLY:
-                    plt.plot(vector[:, 1], 256-vector[:, 0], linewidth=5, color='moccasin')
-                else:
-                    drv.print_vector(vector/(SQRSIZE/350.0))
+        if BOT:
+            for segment in seg_bot[:1]:
+                print("slice_segment_bot")
+                for vector in SingleContour(segment, BATTER_SIZE):
+                    if RUNNING_LOCALLY:
+                        plt.plot(vector[:, 1], 256-vector[:, 0], linewidth=5, color='saddlebrown')
+                    else:
+                        drv.print_vector(vector/(SQRSIZE/320.0))
+        if MID:
+            for segment in seg_mid[:1]:
+                print("slice_segment_mid")
+                for vector in SingleContour(segment, BATTER_SIZE):#measure.find_contours(segment,.1):
+                    if RUNNING_LOCALLY:
+                        plt.plot(vector[:, 1], 256-vector[:, 0], linewidth=5, color='goldenrod')
+                    else:
+                        drv.print_vector(vector/(SQRSIZE/320.0))
+        if TOP:
+            for segment in seg_top[:1]:
+                print("slice_segment_top")
+                for vector in SingleContour(segment, BATTER_SIZE):#measure.find_contours(segment,.1):
+                    if RUNNING_LOCALLY:
+                        plt.plot(vector[:, 1], 256-vector[:, 0], linewidth=5, color='moccasin')
+                    else:
+                        drv.print_vector(vector/(SQRSIZE/320.0))
+        print("done")
     else:
-        for segment in seg_bot[:1]:
-            print("slice_segment_bot")
-            for vector in RapidContour(segment, BATTER_SIZE):
-                if RUNNING_LOCALLY:
-                    plt.plot(vector[:, 1], 256-vector[:, 0], linewidth=5, color='saddlebrown')
-                else:
-                    drv.print_vector(vector/(SQRSIZE/250.0))
-
-        for segment in seg_mid[:1]:
-            print("slice_segment_mid")
-            for vector in RapidContour(segment, BATTER_SIZE):#measure.find_contours(segment,.1):
-                if RUNNING_LOCALLY:
-                    plt.plot(vector[:, 1], 256-vector[:, 0], linewidth=5, color='goldenrod')
-                else:
-                    drv.print_vector(vector/(SQRSIZE/250.0))
-
-        for segment in seg_top[:1]:
-            print("slice_segment_top")
-            for vector in RapidContour(segment, BATTER_SIZE):#measure.find_contours(segment,.1):
-                if RUNNING_LOCALLY:
-                    plt.plot(vector[:, 1], 256-vector[:, 0], linewidth=5, color='moccasin')
-                else:
-                    drv.print_vector(vector/(SQRSIZE/250.0))
+        if BOT:
+            for segment in seg_bot[:1]:
+                print("slice_segment_bot")
+                for vector in RapidContour(segment, BATTER_SIZE):
+                    if RUNNING_LOCALLY:
+                        plt.plot(vector[:, 1], 256-vector[:, 0], linewidth=5, color='saddlebrown')
+                    else:
+                        drv.print_vector(vector/(SQRSIZE/320.0))
+        if MID:
+            for segment in seg_mid[:1]:
+                print("slice_segment_mid")
+                for vector in RapidContour(segment, BATTER_SIZE):#measure.find_contours(segment,.1):
+                    if RUNNING_LOCALLY:
+                        plt.plot(vector[:, 1], 256-vector[:, 0], linewidth=5, color='goldenrod')
+                    else:
+                        drv.print_vector(vector/(SQRSIZE/320.0))
+        if TOP:
+            for segment in seg_top[:1]:
+                print("slice_segment_top")
+                for vector in RapidContour(segment, BATTER_SIZE):#measure.find_contours(segment,.1):
+                    if RUNNING_LOCALLY:
+                        plt.plot(vector[:, 1], 256-vector[:, 0], linewidth=5, color='moccasin')
+                    else:
+                        drv.print_vector(vector/(SQRSIZE/320.0))
+        print("Done!")
     if RETURN_IMG:
         plt.axis("off")
         plt.savefig('fig.png', bbox_inches='tight', pad_inches = 0)
