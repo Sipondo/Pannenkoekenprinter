@@ -66,6 +66,7 @@ class DrawSpace(Widget):
         self.touchState = False
 
     def fix_touch(self, touch):
+        if touch.x is not None and touch.y is not None:
         touch.x = 1024 - touch.x
         touch.y = 600 - touch.y
 
