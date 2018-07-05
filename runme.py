@@ -3,7 +3,7 @@ from PIL import Image
 
 imgname = "images/thalia.png"
 picture = Image.open(imgname).convert("L")
-slicer.Slice_Image(picture, SQRSIZE=500, BLURRED=True, EQUALIZED=False,\
+slicer.Slice_Image(picture, SQRSIZE=400, BLURRED=True, EQUALIZED=False,\
  CWHITE=False, INVERTED=False, RETURN_IMG=False, SINGLE=False,\
   BOT=True, MID=True, TOP=True)
 #

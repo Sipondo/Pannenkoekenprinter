@@ -18,14 +18,16 @@ from skimage import measure
 import os
 RUNNING_LOCALLY = os.path.isfile('Slicer/no_print')
 
-def RapidContour(segment, BATTER_SIZE):
+def RapidContour(segment, BATTER_SIZE, erode=True):
     vector_list = [0]
     vector_output = []
+    if erode:
+        segment = mp.binary_dilation(segment, mp.disk(BATTER_SIZE//2))
     while vector_list:
         vector_list = []
         vector_list = measure.find_contours(segment,.1)
         vector_output.extend(vector_list)
-        segment = mp.dilation(segment, mp.disk(BATTER_SIZE))
+        segment = mp.binary_dilation(segment, mp.disk(BATTER_SIZE))
     return vector_output
 
 def SingleContour(segment, BATTER_SIZE):
@@ -46,7 +48,7 @@ def Slice_Image(picture, SQRSIZE=500, BLURRED=True, EQUALIZED=True, CWHITE=False
     #############CONSTANTS
     #SQRSIZE = 500
     IMAGE_SIZE=(SQRSIZE,SQRSIZE)
-    BATTER_SIZE=SQRSIZE/10
+    BATTER_SIZE=SQRSIZE//20
     IMAGE_FACTOR = (IMAGE_SIZE[0]*IMAGE_SIZE[1]) ** (1. / 4) / 4
     #BLURRED = True
     #EQUALIZED = True
@@ -111,7 +113,7 @@ def Slice_Image(picture, SQRSIZE=500, BLURRED=True, EQUALIZED=True, CWHITE=False
         if MID:
             for segment in seg_mid[:1]:
                 print("slice_segment_mid")
-                for vector in RapidContour(segment, BATTER_SIZE):#measure.find_contours(segment,.1):
+                for vector in RapidContour(segment, BATTER_SIZE, False):#measure.find_contours(segment,.1):
                     if RUNNING_LOCALLY:
                         plt.plot(vector[:, 1], 256-vector[:, 0], linewidth=5, color='goldenrod')
                     else:
