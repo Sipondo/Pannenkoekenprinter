@@ -113,7 +113,7 @@ def Slice_Image(picture, SQRSIZE=500, BLURRED=True, EQUALIZED=True, CWHITE=False
         if MID:
             for segment in seg_mid[:1]:
                 print("slice_segment_mid")
-                for vector in RapidContour(segment, BATTER_SIZE, False):#measure.find_contours(segment,.1):
+                for vector in RapidContour(segment, BATTER_SIZE):#measure.find_contours(segment,.1):
                     if RUNNING_LOCALLY:
                         plt.plot(vector[:, 1], 256-vector[:, 0], linewidth=5, color='goldenrod')
                     else:

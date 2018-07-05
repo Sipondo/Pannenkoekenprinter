@@ -3,7 +3,9 @@ from PIL import Image
 
 imgname = "images/rtilted.jpg"
 picture = Image.open(imgname).convert("L")
-slicer.Slice_Image(picture, SQRSIZE=400, BLURRED=True, EQUALIZED=False,\
+gray = picture.convert('L')
+bw = gray.point(lambda x: 0 if x<128 else 255, '1')
+slicer.Slice_Image(bw, SQRSIZE=400, BLURRED=True, EQUALIZED=False,\
  CWHITE=False, INVERTED=False, RETURN_IMG=False, SINGLE=False,\
   BOT=True, MID=True, TOP=True)
 #
