@@ -29,6 +29,6 @@ class PanPrintApp(App):
         return self.screenManager
 
 
-Window.fullscreen = False
-Window.size = (1024, 600)
+Window.fullscreen = True
+# Window.size = (1024, 600)
 PanPrintApp().run()
