@@ -43,8 +43,8 @@ def calibrate(myStepper):
 
 atexit.register(turnOffMotors)
 
-myStepper1 = mh.getStepper(100, 1)  # 200 steps/rev, motor port #1                 # 30 RPM
-myStepper2 = mh.getStepper(100, 2)  # 200 steps/rev, motor port #1            # 30 RPM
+myStepper1 = mh.getStepper(200, 1)  # 200 steps/rev, motor port #1                 # 30 RPM
+myStepper2 = mh.getStepper(200, 2)  # 200 steps/rev, motor port #1            # 30 RPM
 GPIO.cleanup(7)
 def stepper_worker(myStepper, distance, speed):
     myStepper.setSpeed(int(speed))
