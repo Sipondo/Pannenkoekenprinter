@@ -12,6 +12,8 @@ pos_y = 0
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup([7], GPIO.OUT)
 
+run_motorspeed = 30
+
 
 def turnOffMotors():
     mh.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
@@ -89,17 +91,17 @@ def move(x, y, speed):
 
 def move_vector(vector):
     for next_instruction in vector:
-        move(next_instruction[0], next_instruction[1], 30)
+        move(next_instruction[0]+10, next_instruction[1]+10, run_motorspeed)
 
 def print_vector(vector):
     init_pos = vector[0]
-    move(init_pos[0], init_pos[1], 30)
+    move(init_pos[0]+10, init_pos[1]+10, run_motorspeed)
     print("beslag aan!")
     GPIO.setup([7], GPIO.OUT)
     GPIO.output(7, 1)
     sleep(.2)
     for next_instruction in vector[1:]:
-        move(next_instruction[0], next_instruction[1], 20)
+        move(next_instruction[0]+10, next_instruction[1]+10, run_motorspeed)
     print("beslag uit!")
     GPIO.cleanup(7)
     sleep(.2)
@@ -107,6 +109,6 @@ def print_vector(vector):
 def flush_the_tube():
     GPIO.setup([7], GPIO.OUT)
     GPIO.output(7, 1)
-    sleep(300)
+    sleep(60)
     GPIO.cleanup(7)
     sleep(.2)

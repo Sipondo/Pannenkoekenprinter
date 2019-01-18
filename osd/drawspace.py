@@ -1,10 +1,9 @@
+from drawtoolabstract import Instruction
+from drawtooldraw import EraseTool
 from kivy.app import App
 from kivy.clock import Clock
 from kivy.uix.widget import Widget
-
-from drawtoolabstract import Instruction
-from drawtooldraw import EraseTool
-from util import UndoStack, Area, bindArea
+from util import Area, UndoStack, bindArea
 
 
 class DrawSpace(Widget):
@@ -50,18 +49,28 @@ class DrawSpace(Widget):
         self.stack.push(Instruction(color, instruction))
 
     def on_touch_down(self, touch):
+        touch = self.fix_touch(touch)
         if self.collide_point(touch.x, touch.y):
             self.selectedTool.down(bindArea(touch, self.area, self.selectedWidth))
             self.touchState = True
 
     def on_touch_move(self, touch):
+        touch = self.fix_touch(touch)
         if self.touchState:
             self.selectedTool.move(bindArea(touch, self.area, self.selectedWidth))
 
     def on_touch_up(self, touch):
+        touch = self.fix_touch(touch)
         if self.touchState:
             self.selectedTool.up(bindArea(touch, self.area, self.selectedWidth))
         self.touchState = False
+
+    def fix_touch(self, touch):
+        if touch.x is None or touch.y is None:
+            return touch
+        touch.x = 1024 - touch.x
+        touch.y = 600 - touch.y
+        return touch
 
     def clear(self):
         self.canvas.clear()
